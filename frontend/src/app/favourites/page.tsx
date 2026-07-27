@@ -64,18 +64,18 @@ export default function FavouritesPage() {
         {/* Empty state */}
         {!isLoading && !isError && favourites.length === 0 && (
           <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 p-12 sm:p-16 text-center space-y-5 max-w-lg mx-auto shadow-xs">
-            <div className="bg-red-50 dark:bg-red-950/60 rounded-full w-20 h-20 mx-auto flex items-center justify-center text-[#FF385C]">
+            <div className="w-20 h-20 rounded-full bg-rose-50 dark:bg-rose-950/60 text-[#FF385C] flex items-center justify-center mx-auto shadow-xs">
               <Heart size={40} className="fill-[#FF385C]" />
             </div>
-            <div className="space-y-1">
-              <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">Your wishlist is empty</h2>
-              <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto">
+            <div className="space-y-1.5">
+              <h2 className="text-xl font-extrabold text-zinc-900 dark:text-zinc-100">Your wishlist is empty</h2>
+              <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto leading-relaxed">
                 As you search, tap the heart icon on any property to save your favorite stays here.
               </p>
             </div>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#FF385C] text-white rounded-xl text-sm font-semibold hover:bg-[#E00B41] transition-all shadow-md active:scale-95 cursor-pointer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#FF385C] via-[#E61E4D] to-[#D70466] text-white rounded-xl text-sm font-bold hover:opacity-95 transition-all shadow-md active:scale-95 cursor-pointer"
             >
               <Compass size={18} />
               Start Exploring Homes

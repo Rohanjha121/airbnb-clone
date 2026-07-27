@@ -54,24 +54,32 @@ export default function ListingGrid({
 
   if (listings.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-24 gap-4 text-center">
-        <div className="bg-zinc-100 dark:bg-zinc-800 rounded-full p-5">
-          <SearchX size={36} className="text-zinc-400" />
+      <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 p-12 sm:p-16 text-center space-y-5 max-w-lg mx-auto shadow-xs my-8">
+        <div className="w-20 h-20 rounded-full bg-rose-50 dark:bg-rose-950/60 text-[#FF385C] flex items-center justify-center mx-auto shadow-xs">
+          <SearchX size={38} />
         </div>
-        <div>
-          <h2 className="text-xl font-semibold text-zinc-800 dark:text-zinc-100">No exact matches</h2>
-          <p className="text-zinc-500 dark:text-zinc-400 mt-1 text-sm">
+        <div className="space-y-1.5">
+          <h2 className="text-xl font-extrabold text-zinc-900 dark:text-zinc-100">No exact matches</h2>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto leading-relaxed">
             {category
-              ? `There are no listings in the "${category}" category yet.`
-              : "Try adjusting your filters to find what you're looking for."}
+              ? `There are currently no stay listings under the "${category}" category.`
+              : "Try adjusting or clearing your search filters to explore available properties."}
           </p>
         </div>
+        {category && (
+          <a
+            href="/"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 rounded-xl text-sm font-semibold hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors shadow-sm cursor-pointer"
+          >
+            Show All Listings
+          </a>
+        )}
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-6 gap-y-8">
       {listings.map((listing) => (
         <ListingCard key={listing.id} listing={listing} />
       ))}

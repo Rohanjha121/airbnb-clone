@@ -39,7 +39,7 @@ export default function HomeListings() {
 
       {/* Active Filters Bar */}
       {hasActiveFilters && (
-        <div className="max-w-[2520px] mx-auto px-4 sm:px-6 lg:px-10 pt-4 flex flex-wrap items-center gap-2">
+        <div className="max-w-7xl mx-auto px-6 pt-4 flex flex-wrap items-center gap-2">
           <span className="text-xs font-semibold text-zinc-500 dark:text-zinc-400 flex items-center gap-1">
             <Filter size={14} />
             Active filters:
@@ -87,7 +87,7 @@ export default function HomeListings() {
         </div>
       )}
 
-      <main className="max-w-[2520px] mx-auto px-4 sm:px-6 lg:px-10 py-6 sm:py-8">
+      <main className="max-w-7xl mx-auto px-6 py-6 sm:py-8">
         <ListingGrid
           listings={listings}
           isLoading={isLoading}

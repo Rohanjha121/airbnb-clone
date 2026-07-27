@@ -25,7 +25,7 @@ export default function ConfirmDeleteModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="relative w-full max-w-md bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl p-6 space-y-5 border border-zinc-200 dark:border-zinc-800">
+      <div className="relative w-full max-w-md bg-white dark:bg-zinc-900 rounded-2xl shadow-2xl p-6 space-y-5 border border-zinc-200 dark:border-zinc-800 animate-in zoom-in-95 duration-200">
         <button
           onClick={onClose}
           disabled={isLoading}

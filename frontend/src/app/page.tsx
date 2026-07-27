@@ -3,7 +3,7 @@ import HomeListings from "@/components/home/HomeListings";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-zinc-950 transition-colors">
+    <div className="min-h-screen bg-white dark:bg-zinc-950 transition-colors animate-page-fade-in">
       <Navbar />
       <HomeListings />
     </div>

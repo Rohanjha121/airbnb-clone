@@ -13,53 +13,16 @@ export default function UserMenu() {
 
   return (
     <>
-      <div className="relative flex items-center gap-2 sm:gap-3 shrink-0">
-        {/* Favorites Link */}
-        <Link
-          href="/favorites"
-          className="hidden md:flex items-center gap-1.5 text-xs font-semibold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 px-3 py-2 rounded-full transition duration-150"
-        >
-          <Heart size={15} className="text-[#FF385C]" />
-          Favorites
-        </Link>
-
-        {/* Rent Your Home Button */}
-        {isHost && (
-          <button
-            onClick={() => setIsRentModalOpen(true)}
-            className="hidden md:flex items-center gap-1.5 text-xs font-semibold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 px-3 py-2 rounded-full transition duration-150 cursor-pointer"
-          >
-            <Plus size={15} className="text-[#FF385C]" />
-            Rent your home
-          </button>
-        )}
-
-        {/* My Trips Link */}
-        <Link
-          href="/trips"
-          className="hidden md:flex items-center gap-1.5 text-xs font-semibold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 px-3 py-2 rounded-full transition duration-150"
-        >
-          <Luggage size={15} />
-          My Trips
-        </Link>
-
-        {/* My Properties Link */}
-        {isHost && (
-          <Link
-            href="/my-properties"
-            className="hidden md:flex items-center gap-1.5 text-xs font-semibold text-zinc-800 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 px-3 py-2 rounded-full transition duration-150"
-          >
-            <Building size={15} />
-            My Properties
-          </Link>
-        )}
+      <div className="relative flex items-center shrink-0 whitespace-nowrap">
 
         {/* User pill menu button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
+          aria-expanded={isOpen}
+          aria-haspopup="menu"
+          aria-label="User account menu"
           className="flex items-center gap-3 border border-zinc-300 dark:border-zinc-700 rounded-full px-3 py-1.5 
-                     hover:shadow-md transition duration-200 bg-white dark:bg-zinc-900 cursor-pointer"
-          aria-label="User menu"
+                     hover:shadow-md transition duration-200 bg-white dark:bg-zinc-900 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100"
         >
           <Menu size={16} className="text-zinc-700 dark:text-zinc-300" />
           <div className="bg-zinc-700 dark:bg-zinc-600 rounded-full p-1 text-white">

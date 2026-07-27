@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import { type ListingCategory } from "@/types/listing";
 
 interface Category {
@@ -29,67 +30,72 @@ interface CategoryBarProps {
   onSelect: (category: string | null) => void;
 }
 
-export default function CategoryBar({ selected, onSelect }: CategoryBarProps) {
+function CategoryBarComponent({ selected, onSelect }: CategoryBarProps) {
   return (
-    <div className="bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 sticky top-16 md:top-20 z-40 transition-colors">
-      <div className="max-w-[2520px] mx-auto px-4 sm:px-6 lg:px-10">
+    <nav
+      aria-label="Property categories"
+      className="bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 sticky top-16 md:top-20 z-40 transition-colors"
+    >
+      <div className="max-w-7xl mx-auto px-6">
         <div
-          className="flex items-center gap-1 overflow-x-auto py-3 scrollbar-hide"
+          role="tablist"
+          aria-label="Filter listings by category"
+          className="flex items-center justify-center gap-8 overflow-x-auto whitespace-nowrap scrollbar-hide py-3"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {/* All button */}
           <button
+            role="tab"
+            aria-selected={selected === null}
+            aria-label="All categories"
             onClick={() => onSelect(null)}
-            className={`flex flex-col items-center gap-1 px-3 py-2 rounded-xl whitespace-nowrap 
-                        transition-all duration-150 min-w-fit shrink-0 group cursor-pointer
-                        ${
-                          selected === null
-                            ? "opacity-100"
-                            : "opacity-60 hover:opacity-100"
-                        }`}
+            className="flex flex-col items-center justify-center min-w-[72px] flex-shrink-0 cursor-pointer gap-1 px-3 py-2 rounded-xl whitespace-nowrap opacity-100 group transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100"
           >
-            <span className="text-2xl">🏠</span>
+            <span className="text-2xl shrink-0 select-none" aria-hidden="true">🏠</span>
             <span
-              className={`text-xs font-medium pb-0.5 transition-all
+              className={`text-xs font-medium pb-0.5 transition-colors duration-150
                           ${
                             selected === null
                               ? "text-zinc-900 dark:text-zinc-100 border-b-2 border-zinc-900 dark:border-zinc-100 font-bold"
-                              : "text-zinc-500 dark:text-zinc-400"
+                              : "text-zinc-600 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-100"
                           }`}
             >
               All
             </span>
           </button>
 
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat.label}
-              onClick={() =>
-                onSelect(selected === cat.label ? null : cat.label)
-              }
-              className={`flex flex-col items-center gap-1 px-3 py-2 rounded-xl whitespace-nowrap 
-                          transition-all duration-150 min-w-fit shrink-0 cursor-pointer
-                          ${
-                            selected === cat.label
-                              ? "opacity-100"
-                              : "opacity-60 hover:opacity-100"
-                          }`}
-            >
-              <span className="text-2xl">{cat.icon}</span>
-              <span
-                className={`text-xs font-medium pb-0.5 transition-all
-                            ${
-                              selected === cat.label
-                                ? "text-zinc-900 dark:text-zinc-100 border-b-2 border-zinc-900 dark:border-zinc-100 font-bold"
-                                : "text-zinc-500 dark:text-zinc-400"
-                            }`}
+          {CATEGORIES.map((cat) => {
+            const isSelected = selected === cat.label;
+            return (
+              <button
+                key={cat.label}
+                role="tab"
+                aria-selected={isSelected}
+                aria-label={`Filter by ${cat.label}`}
+                onClick={() =>
+                  onSelect(isSelected ? null : cat.label)
+                }
+                className="flex flex-col items-center justify-center min-w-[72px] flex-shrink-0 cursor-pointer gap-1 px-3 py-2 rounded-xl whitespace-nowrap opacity-100 group transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100"
               >
-                {cat.label}
-              </span>
-            </button>
-          ))}
+                <span className="text-2xl shrink-0 select-none" aria-hidden="true">{cat.icon}</span>
+                <span
+                  className={`text-xs font-medium pb-0.5 transition-colors duration-150
+                              ${
+                                isSelected
+                                  ? "text-zinc-900 dark:text-zinc-100 border-b-2 border-zinc-900 dark:border-zinc-100 font-bold"
+                                  : "text-zinc-600 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-100"
+                              }`}
+                >
+                  {cat.label}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
-    </div>
+    </nav>
   );
 }
+
+const CategoryBar = memo(CategoryBarComponent);
+export default CategoryBar;

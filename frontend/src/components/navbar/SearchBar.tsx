@@ -1,5 +1,6 @@
 "use client";
 
+import { toast } from "react-hot-toast";
 import { useState } from "react";
 import { Search, X, MapPin, Users, Calendar, DollarSign } from "lucide-react";
 import { useSearch } from "@/context/SearchContext";
@@ -49,6 +50,11 @@ export default function SearchBar() {
     setMinPrice(tempMinPrice.trim() !== "" ? Number(tempMinPrice) : null);
     setMaxPrice(tempMaxPrice.trim() !== "" ? Number(tempMaxPrice) : null);
     setIsOpen(false);
+
+    const hasSearchCriteria = tempLocation.trim() || tempCheckIn || tempMinPrice || tempMaxPrice || tempGuests > 1;
+    if (hasSearchCriteria) {
+      toast.success(tempLocation.trim() ? `Searching stays in "${tempLocation}"` : "Search filters applied");
+    }
   };
 
   const handleClear = (e?: React.MouseEvent) => {
@@ -60,17 +66,18 @@ export default function SearchBar() {
     setTempCheckOut("");
     setTempMinPrice("");
     setTempMaxPrice("");
+    toast.success("Search filters cleared");
   };
 
   return (
     <>
       {/* Pill Search Button */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center justify-center gap-2 w-full">
         <button
           onClick={handleOpenModal}
-          className="flex items-center gap-3 sm:gap-4 border border-zinc-200 dark:border-zinc-700/80 rounded-full 
+          className="flex items-center justify-between gap-3 sm:gap-4 border border-zinc-200 dark:border-zinc-700/80 rounded-full 
                      px-4 sm:px-5 py-2 sm:py-2.5 shadow-xs hover:shadow-md transition-all duration-200 
-                     bg-white dark:bg-zinc-900 text-xs sm:text-sm font-medium text-zinc-700 dark:text-zinc-200 cursor-pointer"
+                     bg-white dark:bg-zinc-900 text-xs sm:text-sm font-medium text-zinc-700 dark:text-zinc-200 cursor-pointer w-full"
           aria-label="Search destinations"
         >
           <span className="border-r border-zinc-200 dark:border-zinc-700 pr-3 sm:pr-4 truncate max-w-[100px] sm:max-w-[130px] font-semibold text-zinc-900 dark:text-zinc-100">

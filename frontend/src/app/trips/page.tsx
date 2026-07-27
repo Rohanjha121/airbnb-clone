@@ -66,12 +66,18 @@ export default function MyTripsPage() {
         {isLoading && (
           <div className="space-y-4">
             {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="bg-white dark:bg-zinc-900 rounded-2xl p-4 border border-zinc-200 dark:border-zinc-800 flex flex-col md:flex-row gap-6 animate-pulse">
-                <div className="w-full md:w-64 h-40 bg-zinc-200 dark:bg-zinc-800 rounded-xl"></div>
-                <div className="flex-1 space-y-3 py-2">
-                  <div className="h-6 bg-zinc-200 dark:bg-zinc-800 rounded w-1/3"></div>
-                  <div className="h-4 bg-zinc-200 dark:bg-zinc-800 rounded w-1/4"></div>
-                  <div className="h-4 bg-zinc-200 dark:bg-zinc-800 rounded w-1/2"></div>
+              <div key={i} className="bg-white dark:bg-zinc-900 rounded-2xl p-4 sm:p-5 border border-zinc-200 dark:border-zinc-800 flex flex-col md:flex-row gap-6 animate-pulse justify-between">
+                <div className="flex flex-col sm:flex-row gap-5 flex-1">
+                  <div className="w-full sm:w-48 aspect-4/3 bg-zinc-200 dark:bg-zinc-800 rounded-xl shrink-0"></div>
+                  <div className="flex-1 space-y-3 py-1">
+                    <div className="h-6 bg-zinc-200 dark:bg-zinc-800 rounded-lg w-2/3"></div>
+                    <div className="h-4 bg-zinc-200 dark:bg-zinc-800 rounded-md w-1/3"></div>
+                    <div className="h-10 bg-zinc-200 dark:bg-zinc-800 rounded-xl w-full"></div>
+                  </div>
+                </div>
+                <div className="flex md:flex-col justify-between items-end gap-4 shrink-0">
+                  <div className="h-7 bg-zinc-200 dark:bg-zinc-800 rounded-md w-20"></div>
+                  <div className="h-9 bg-zinc-200 dark:bg-zinc-800 rounded-xl w-28"></div>
                 </div>
               </div>
             ))}
@@ -80,19 +86,21 @@ export default function MyTripsPage() {
 
         {/* Empty state */}
         {!isLoading && reservations.length === 0 && (
-          <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 p-12 text-center space-y-4">
-            <div className="bg-zinc-100 dark:bg-zinc-800 rounded-full w-16 h-16 mx-auto flex items-center justify-center text-zinc-400">
-              <Luggage size={32} />
+          <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 p-12 sm:p-16 text-center space-y-5 max-w-lg mx-auto shadow-xs">
+            <div className="w-20 h-20 rounded-full bg-rose-50 dark:bg-rose-950/60 text-[#FF385C] flex items-center justify-center mx-auto shadow-xs">
+              <Luggage size={38} />
             </div>
-            <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">No trips booked yet</h2>
-            <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto">
-              Time to dust off your bags and start planning your next getaway.
-            </p>
+            <div className="space-y-1.5">
+              <h2 className="text-xl font-extrabold text-zinc-900 dark:text-zinc-100">No trips booked yet</h2>
+              <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto leading-relaxed">
+                Time to dust off your bags and start planning your next getaway. Discover unique stays around the world.
+              </p>
+            </div>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#FF385C] text-white rounded-xl text-sm font-semibold hover:bg-[#E00B41] transition-colors shadow-sm"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#FF385C] via-[#E61E4D] to-[#D70466] text-white rounded-xl text-sm font-bold hover:opacity-95 transition-all shadow-md active:scale-95 cursor-pointer"
             >
-              Start Searching
+              Start Searching Homes
             </Link>
           </div>
         )}

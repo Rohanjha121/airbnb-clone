@@ -131,10 +131,20 @@ export default function MyPropertiesPage() {
         {isLoading && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="bg-white dark:bg-zinc-900 rounded-2xl p-4 border border-zinc-200 dark:border-zinc-800 space-y-3 animate-pulse">
-                <div className="h-48 bg-zinc-200 dark:bg-zinc-800 rounded-xl w-full"></div>
-                <div className="h-5 bg-zinc-200 dark:bg-zinc-800 rounded w-3/4"></div>
-                <div className="h-4 bg-zinc-200 dark:bg-zinc-800 rounded w-1/2"></div>
+              <div key={i} className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden space-y-3 animate-pulse">
+                <div className="aspect-video w-full bg-zinc-200 dark:bg-zinc-800"></div>
+                <div className="p-4 space-y-2">
+                  <div className="h-5 bg-zinc-200 dark:bg-zinc-800 rounded-md w-3/4"></div>
+                  <div className="h-3.5 bg-zinc-200 dark:bg-zinc-800 rounded-md w-1/2"></div>
+                  <div className="h-4 bg-zinc-200 dark:bg-zinc-800 rounded-md w-1/4 pt-1"></div>
+                </div>
+                <div className="p-4 pt-0 flex justify-between items-center border-t border-zinc-100 dark:border-zinc-800 mt-2">
+                  <div className="h-4 bg-zinc-200 dark:bg-zinc-800 rounded-md w-20"></div>
+                  <div className="flex gap-2">
+                    <div className="h-7 bg-zinc-200 dark:bg-zinc-800 rounded-lg w-14"></div>
+                    <div className="h-7 bg-zinc-200 dark:bg-zinc-800 rounded-lg w-16"></div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -142,19 +152,21 @@ export default function MyPropertiesPage() {
 
         {/* Empty state */}
         {!isLoading && listings.length === 0 && (
-          <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 p-12 text-center space-y-4">
-            <div className="bg-zinc-100 dark:bg-zinc-800 rounded-full w-16 h-16 mx-auto flex items-center justify-center text-zinc-400">
-              <Home size={32} />
+          <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-zinc-200 dark:border-zinc-800 p-12 sm:p-16 text-center space-y-5 max-w-lg mx-auto shadow-xs">
+            <div className="w-20 h-20 rounded-full bg-rose-50 dark:bg-rose-950/60 text-[#FF385C] flex items-center justify-center mx-auto shadow-xs">
+              <Building size={38} />
             </div>
-            <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">No properties listed yet</h2>
-            <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto">
-              Start hosting today by adding your first property listing.
-            </p>
+            <div className="space-y-1.5">
+              <h2 className="text-xl font-extrabold text-zinc-900 dark:text-zinc-100">No properties listed yet</h2>
+              <p className="text-sm text-zinc-500 dark:text-zinc-400 max-w-sm mx-auto leading-relaxed">
+                Start hosting today by adding your first property listing to welcome guests from all over the world.
+              </p>
+            </div>
             <button
               onClick={handleOpenCreateModal}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#FF385C] text-white rounded-xl text-sm font-semibold hover:bg-[#E00B41] transition-colors shadow-sm cursor-pointer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#FF385C] via-[#E61E4D] to-[#D70466] text-white rounded-xl text-sm font-bold hover:opacity-95 transition-all shadow-md active:scale-95 cursor-pointer"
             >
-              <Plus size={16} />
+              <Plus size={18} />
               Rent Your Home
             </button>
           </div>

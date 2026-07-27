@@ -22,18 +22,19 @@ export default function Providers({ children }: ProvidersProps) {
           <Toaster
             position="top-center"
             toastOptions={{
-              duration: 4000,
-              style: {
-                background: "#1a1a1a",
-                color: "#fff",
-                borderRadius: "8px",
-                padding: "12px 16px",
-                fontSize: "14px",
-              },
+              duration: 3500,
+              className:
+                "dark:!bg-zinc-900 dark:!text-zinc-100 !bg-white !text-zinc-900 !border !border-zinc-200/80 dark:!border-zinc-800 !rounded-2xl !shadow-xl !font-sans !text-xs !font-semibold !px-4.5 !py-3",
               success: {
                 iconTheme: {
                   primary: "#FF385C",
-                  secondary: "#fff",
+                  secondary: "#ffffff",
+                },
+              },
+              error: {
+                iconTheme: {
+                  primary: "#ef4444",
+                  secondary: "#ffffff",
                 },
               },
             }}

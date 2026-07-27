@@ -32,7 +32,8 @@ export default function HeartButton({
       <button
         onClick={handleClick}
         disabled={toggleFavouriteMutation.isPending}
-        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-sm font-medium text-zinc-800 dark:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors cursor-pointer disabled:opacity-70 ${className}`}
+        aria-pressed={isFavourited}
+        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-sm font-medium text-zinc-800 dark:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors cursor-pointer disabled:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 ${className}`}
         aria-label={isFavourited ? "Remove from favourites" : "Add to favourites"}
       >
         <Heart
@@ -50,8 +51,9 @@ export default function HeartButton({
     <button
       onClick={handleClick}
       disabled={toggleFavouriteMutation.isPending}
+      aria-pressed={isFavourited}
       aria-label={isFavourited ? "Remove from favourites" : "Add to favourites"}
-      className={`p-1.5 rounded-full transition-transform hover:scale-110 active:scale-95 cursor-pointer disabled:opacity-70 ${className}`}
+      className={`p-1.5 rounded-full transition-transform hover:scale-110 active:scale-95 cursor-pointer disabled:opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 ${className}`}
     >
       <Heart
         size={size}
