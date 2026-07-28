@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { User, Menu, Building, Luggage, Home, Calendar, Plus, Heart } from "lucide-react";
 import RentYourHomeModal from "@/components/host/RentYourHomeModal";
@@ -11,13 +11,34 @@ export default function UserMenu() {
   const [isRentModalOpen, setIsRentModalOpen] = useState(false);
   const [isHost, setIsHost] = useState(true); // Default to host user mode (Sarah Mitchell)
 
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
   return (
     <>
-      <div className="relative flex items-center shrink-0 whitespace-nowrap">
+      <div ref={menuRef} className="relative flex items-center shrink-0 whitespace-nowrap">
 
         {/* User pill menu button */}
         <button
-          onClick={() => setIsOpen(!isOpen)}
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsOpen((prev) => !prev);
+          }}
           aria-expanded={isOpen}
           aria-haspopup="menu"
           aria-label="User account menu"

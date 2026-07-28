@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -75,7 +76,39 @@ export default function RentYourHomeModal({ isOpen, onClose }: RentYourHomeModal
   const selectedCategory = watch("category");
   const formValues = watch();
 
-  if (!isOpen) return null;
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Close on Escape key press
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && isOpen) {
+        setStep(STEPS.CATEGORY);
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
+  // Prevent page from scrolling while modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  if (!isOpen || !mounted) return null;
 
   const handleNext = async () => {
     let isValid = false;
@@ -115,9 +148,20 @@ export default function RentYourHomeModal({ isOpen, onClose }: RentYourHomeModal
 
   const progressPercentage = (step / 6) * 100;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="relative w-full max-w-2xl bg-white dark:bg-zinc-900 rounded-3xl shadow-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200">
+  const handleCloseModal = () => {
+    setStep(STEPS.CATEGORY);
+    onClose();
+  };
+
+  const modalContent = (
+    <div
+      onClick={handleCloseModal}
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="relative w-full max-w-2xl bg-white dark:bg-zinc-900 rounded-3xl shadow-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 flex flex-col max-h-[90vh] animate-in zoom-in-95 duration-200"
+      >
         {/* Top Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-200 dark:border-zinc-800 shrink-0">
           <div>
@@ -165,11 +209,10 @@ export default function RentYourHomeModal({ isOpen, onClose }: RentYourHomeModal
                       key={cat}
                       type="button"
                       onClick={() => setValue("category", cat, { shouldValidate: true })}
-                      className={`p-4 rounded-2xl border text-left flex flex-col justify-between transition-all cursor-pointer ${
-                        selectedCategory === cat
+                      className={`p-4 rounded-2xl border text-left flex flex-col justify-between transition-all cursor-pointer ${selectedCategory === cat
                           ? "border-zinc-900 dark:border-zinc-100 bg-zinc-50 dark:bg-zinc-800 ring-2 ring-zinc-900 dark:ring-zinc-100 font-bold"
                           : "border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-500"
-                      }`}
+                        }`}
                     >
                       <Sparkles size={20} className={selectedCategory === cat ? "text-[#FF385C]" : "text-zinc-400"} />
                       <span className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 mt-4">{cat}</span>
@@ -435,4 +478,6 @@ export default function RentYourHomeModal({ isOpen, onClose }: RentYourHomeModal
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 }

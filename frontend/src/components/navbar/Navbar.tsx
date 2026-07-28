@@ -12,9 +12,9 @@ export default function Navbar() {
             <Logo />
           </div>
 
-          {/* Section 2 - Center: SearchBar (Perfectly centered, flex: 1, max-width: 520px) */}
+          {/* Section 2 - Center: SearchBar */}
           <div className="flex-1 flex justify-center items-center min-w-0 px-2">
-            <div className="w-full max-w-[520px]">
+            <div className="w-full max-w-[860px] transition-all duration-300">
               <SearchBar />
             </div>
           </div>

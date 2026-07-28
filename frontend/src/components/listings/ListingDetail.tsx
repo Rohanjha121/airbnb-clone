@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -71,6 +71,31 @@ export default function ListingDetail({ listing }: ListingDetailProps) {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [guestsCount, setGuestsCount] = useState(2);
+
+  const checkInInputRef = useRef<HTMLInputElement>(null);
+  const checkOutInputRef = useRef<HTMLInputElement>(null);
+
+  const handleOpenDatePicker = (inputRef: React.RefObject<HTMLInputElement | null>) => {
+    if (!inputRef.current) return;
+    try {
+      if (typeof inputRef.current.showPicker === "function") {
+        inputRef.current.showPicker();
+      } else {
+        inputRef.current.focus();
+      }
+    } catch {
+      inputRef.current.focus();
+    }
+  };
+
+  const todayStr = useMemo(() => new Date().toISOString().split("T")[0], []);
+
+  // Auto-clear checkout if check-in is set to a date later than or equal to checkout
+  useEffect(() => {
+    if (checkIn && checkOut && checkOut <= checkIn) {
+      setCheckOut("");
+    }
+  }, [checkIn, checkOut]);
 
   const { data: existingReservations = [] } = useListingReservations(listing.id);
   const createReservationMutation = useCreateReservation();
@@ -378,23 +403,33 @@ export default function ListingDetail({ listing }: ListingDetailProps) {
             {/* Date and Guests Selector Card */}
             <div className="rounded-2xl border border-zinc-300 dark:border-zinc-700 overflow-hidden divide-y divide-zinc-300 dark:divide-zinc-700 shadow-xs">
               <div className="grid grid-cols-2 divide-x divide-zinc-300 dark:divide-zinc-700">
-                <div className="p-3.5 bg-zinc-50/60 dark:bg-zinc-800/60">
-                  <label className="block text-[10px] font-bold tracking-wider text-zinc-600 dark:text-zinc-400 uppercase">
+                <div
+                  onClick={() => handleOpenDatePicker(checkInInputRef)}
+                  className="p-3.5 bg-zinc-50/60 dark:bg-zinc-800/60 cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                >
+                  <label className="block text-[10px] font-bold tracking-wider text-zinc-600 dark:text-zinc-400 uppercase cursor-pointer">
                     Check-in
                   </label>
                   <input
+                    ref={checkInInputRef}
                     type="date"
+                    min={todayStr}
                     value={checkIn}
                     onChange={(e) => setCheckIn(e.target.value)}
                     className="w-full text-xs font-semibold text-zinc-900 dark:text-zinc-100 bg-transparent border-0 p-0 focus:ring-0 cursor-pointer mt-1"
                   />
                 </div>
-                <div className="p-3.5 bg-zinc-50/60 dark:bg-zinc-800/60">
-                  <label className="block text-[10px] font-bold tracking-wider text-zinc-600 dark:text-zinc-400 uppercase">
+                <div
+                  onClick={() => handleOpenDatePicker(checkOutInputRef)}
+                  className="p-3.5 bg-zinc-50/60 dark:bg-zinc-800/60 cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+                >
+                  <label className="block text-[10px] font-bold tracking-wider text-zinc-600 dark:text-zinc-400 uppercase cursor-pointer">
                     Checkout
                   </label>
                   <input
+                    ref={checkOutInputRef}
                     type="date"
+                    min={checkIn || todayStr}
                     value={checkOut}
                     onChange={(e) => setCheckOut(e.target.value)}
                     className="w-full text-xs font-semibold text-zinc-900 dark:text-zinc-100 bg-transparent border-0 p-0 focus:ring-0 cursor-pointer mt-1"
